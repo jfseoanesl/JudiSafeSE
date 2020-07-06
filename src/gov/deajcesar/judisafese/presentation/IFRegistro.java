@@ -9,6 +9,7 @@ import gov.deajcesar.judisafese.logic.GListRegister;
 import gov.deajcesar.judisafese.logic.GPerson;
 import gov.deajcesar.judisafese.logic.GRegister;
 import java.awt.Color;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
     private GPerson gp;
     private boolean existe;
+    private String busqueda;
     private Thread reloj;
     /**
      * Creates new form NewJInternalFrame
@@ -78,33 +80,53 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         bSave = new javax.swing.JButton();
         tTmp = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setTitle("Registro ingreso de visitantes");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel1.setText("No Documento:");
+        jLabel1.setText("No Documento (*) : ");
 
         tCc.setBackground(new java.awt.Color(255, 255, 204));
         tCc.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         tCc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tCc.setPreferredSize(new java.awt.Dimension(70, 28));
+        tCc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tCcFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tCcFocusLost(evt);
+            }
+        });
         tCc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tCcActionPerformed(evt);
             }
         });
         tCc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tCcKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tCcKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tCcKeyTyped(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Nombre (s) : ");
+        jLabel2.setText("Nombres (*) : ");
 
         tName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tName.setPreferredSize(new java.awt.Dimension(60, 28));
+        tName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tNameFocusGained(evt);
+            }
+        });
         tName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tNameActionPerformed(evt);
@@ -112,11 +134,16 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel3.setText("Apellido  (s) : ");
+        jLabel3.setText("Apellido  (*) : ");
 
         tLastName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tLastName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tLastName.setPreferredSize(new java.awt.Dimension(60, 28));
+        tLastName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tLastNameFocusGained(evt);
+            }
+        });
         tLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tLastNameActionPerformed(evt);
@@ -129,6 +156,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tPhone.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tPhone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tPhone.setPreferredSize(new java.awt.Dimension(60, 28));
+        tPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPhoneFocusGained(evt);
+            }
+        });
         tPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tPhoneActionPerformed(evt);
@@ -141,6 +173,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tEmail.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tEmail.setPreferredSize(new java.awt.Dimension(60, 28));
+        tEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tEmailFocusGained(evt);
+            }
+        });
         tEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tEmailActionPerformed(evt);
@@ -153,6 +190,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tAddres.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tAddres.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tAddres.setPreferredSize(new java.awt.Dimension(60, 28));
+        tAddres.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tAddresFocusGained(evt);
+            }
+        });
         tAddres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tAddresActionPerformed(evt);
@@ -179,7 +221,7 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tDateTime.setPreferredSize(new java.awt.Dimension(60, 28));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel9.setText("Sintomas :");
+        jLabel9.setText("Sintomas (*) :");
 
         tAlerta.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tAlerta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -191,7 +233,7 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel10.setText("Temperatura :");
+        jLabel10.setText("Temp (*) :");
 
         tSymptoms.setColumns(20);
         tSymptoms.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -199,6 +241,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tSymptoms.setTabSize(5);
         tSymptoms.setWrapStyleWord(true);
         tSymptoms.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        tSymptoms.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tSymptomsFocusGained(evt);
+            }
+        });
         tSymptoms.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tSymptomsKeyPressed(evt);
@@ -210,11 +257,16 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         jScrollPane1.setViewportView(tSymptoms);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel11.setText("Origen: ");
+        jLabel11.setText("Origen (*) : ");
 
         tOrigin.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tOrigin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tOrigin.setPreferredSize(new java.awt.Dimension(60, 28));
+        tOrigin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tOriginFocusGained(evt);
+            }
+        });
         tOrigin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tOriginActionPerformed(evt);
@@ -222,11 +274,16 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel12.setText("Destino:");
+        jLabel12.setText("Destino (*) :");
 
         tDestiny.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tDestiny.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tDestiny.setPreferredSize(new java.awt.Dimension(60, 28));
+        tDestiny.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tDestinyFocusGained(evt);
+            }
+        });
         tDestiny.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tDestinyActionPerformed(evt);
@@ -243,6 +300,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tObs.setTabSize(5);
         tObs.setWrapStyleWord(true);
         tObs.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        tObs.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tObsFocusGained(evt);
+            }
+        });
         tObs.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tObsKeyPressed(evt);
@@ -266,7 +328,6 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         bSave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         bSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gov/deajcesar/judisafese/resources/save_78348.png"))); // NOI18N
         bSave.setText("Guardar");
-        bSave.setBorderPainted(false);
         bSave.setIconTextGap(20);
         bSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,6 +339,14 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         tTmp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         tTmp.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tTmp.setPreferredSize(new java.awt.Dimension(60, 28));
+        tTmp.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tTmpFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tTmpFocusLost(evt);
+            }
+        });
         tTmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tTmpActionPerformed(evt);
@@ -286,6 +355,9 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel14.setText("° C");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel15.setText("( * ) : Datos Obligatorios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -309,20 +381,20 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                                         .addComponent(tDateTime, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(32, 32, 32))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
-                                .addGap(61, 61, 61)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tDestiny, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(32, 32, 32))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 838, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,6 +406,8 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                                         .addComponent(tAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(33, 33, 33))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bSave, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,10 +427,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tTmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tTmp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -380,13 +455,12 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(bSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel15)))
                 .addGap(14, 14, 14))
         );
 
@@ -400,16 +474,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel1))
-                                .addGap(23, 23, 23))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -470,45 +539,45 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
 
     private void tCcKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCcKeyReleased
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_tCcKeyReleased
 
     private void tCcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCcActionPerformed
         // TODO add your handling code here:
-        String cc = this.tCc.getText();
-        this.limpiar();
-        this.tCc.setText(cc);
-        this.findPerson();
+        this.buscar();
+        this.asignarFoco(1);
         
     }//GEN-LAST:event_tCcActionPerformed
 
     private void tNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNameActionPerformed
             // TODO add your handling code here:
-            this.tLastName.grabFocus();
+        this.asignarFoco(2);
     }//GEN-LAST:event_tNameActionPerformed
 
     private void tLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tLastNameActionPerformed
             // TODO add your handling code here:
-            this.tPhone.grabFocus();
+            this.asignarFoco(3);
     }//GEN-LAST:event_tLastNameActionPerformed
 
     private void tPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tPhoneActionPerformed
         // TODO add your handling code here:
-        this.tEmail.grabFocus();
+        this.asignarFoco(4);
     }//GEN-LAST:event_tPhoneActionPerformed
 
     private void tEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tEmailActionPerformed
         // TODO add your handling code here:
-        this.tAddres.grabFocus();
+        this.asignarFoco(5);
     }//GEN-LAST:event_tEmailActionPerformed
 
     private void tAddresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tAddresActionPerformed
         // TODO add your handling code here:
-        this.tTmp.grabFocus();
+       this.asignarFoco(6);
     }//GEN-LAST:event_tAddresActionPerformed
 
     private void tAlertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tAlertaActionPerformed
         // TODO add your handling code here:
-        
+       this.asignarFoco(7); 
     }//GEN-LAST:event_tAlertaActionPerformed
 
     private void tSymptomsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSymptomsKeyReleased
@@ -518,34 +587,34 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
 
     private void tOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tOriginActionPerformed
         // TODO add your handling code here:
-        this.tDestiny.grabFocus();
+        this.asignarFoco(9);
     }//GEN-LAST:event_tOriginActionPerformed
 
     private void tDestinyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tDestinyActionPerformed
         // TODO add your handling code here:
-        this.tObs.grabFocus();
+        this.asignarFoco(10);
     }//GEN-LAST:event_tDestinyActionPerformed
 
     private void tObsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tObsKeyReleased
         // TODO add your handling code here:
+        
         
     }//GEN-LAST:event_tObsKeyReleased
 
     private void tObsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tObsKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            this.bSave.grabFocus();
+            this.asignarFoco(11);
         }
+        
     }//GEN-LAST:event_tObsKeyPressed
 
     private void tSymptomsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSymptomsKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            if(this.tSymptoms.getText().trim().isEmpty()){
-                this.tSymptoms.setText(null);
-            }
-            this.tOrigin.grabFocus();
+            this.asignarFoco(8);
         }
+        
     }//GEN-LAST:event_tSymptomsKeyPressed
 
     private void bCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelActionPerformed
@@ -555,10 +624,218 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
 
     private void tTmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTmpActionPerformed
         // TODO add your handling code here:
-        this.semaforoAlerta();
-        this.tSymptoms.grabFocus();
+        //this.semaforoAlerta();
+        this.asignarFoco(7);
     }//GEN-LAST:event_tTmpActionPerformed
+
+    private void tCcFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tCcFocusLost
+        // TODO add your handling code here:
+        if(this.busqueda!=null){
+            if(!this.busqueda.equals(this.tCc.getText().trim())){
+                this.buscar();
+                this.asignarFoco(0);
+            }
+        }
+            
+    }//GEN-LAST:event_tCcFocusLost
+
+    private void tTmpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tTmpFocusLost
+        // TODO add your handling code here:
+        if(!this.tTmp.getText().trim().isEmpty())
+            this.semaforoAlerta();
+    }//GEN-LAST:event_tTmpFocusLost
+
+    private void tCcKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCcKeyPressed
+        // TODO add your handling code here:
+        this.tCc.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+                java.util.Collections.EMPTY_SET);
+        if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+            this.buscar();
+            this.asignarFoco(0);
+        }
+        
+    }//GEN-LAST:event_tCcKeyPressed
+
+    private void tCcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCcKeyTyped
+      
+    }//GEN-LAST:event_tCcKeyTyped
+
+    private void tSymptomsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tSymptomsFocusGained
+        // TODO add your handling code here:
+        if(this.tSymptoms.getText().trim().isEmpty()){
+                this.tSymptoms.setText(null);
+        }
+        else
+            this.seleccionarTexto(7);
+    }//GEN-LAST:event_tSymptomsFocusGained
+
+    private void tObsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tObsFocusGained
+        // TODO add your handling code here:
+            if(this.tObs.getText().trim().isEmpty()){
+                this.tObs.setText(null);
+            }
+            else
+                this.seleccionarTexto(10);
+           
+    }//GEN-LAST:event_tObsFocusGained
+
+    private void tCcFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tCcFocusGained
+        // TODO add your handling code here:
+        this.busqueda=this.tCc.getText().trim();
+        this.seleccionarTexto(0);
+    }//GEN-LAST:event_tCcFocusGained
+
+    private void tNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tNameFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(1);
+    }//GEN-LAST:event_tNameFocusGained
+
+    private void tLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tLastNameFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(2);
+    }//GEN-LAST:event_tLastNameFocusGained
+
+    private void tPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPhoneFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(3);
+    }//GEN-LAST:event_tPhoneFocusGained
+
+    private void tEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tEmailFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(4);
+    }//GEN-LAST:event_tEmailFocusGained
+
+    private void tAddresFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tAddresFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(5);
+    }//GEN-LAST:event_tAddresFocusGained
+
+    private void tTmpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tTmpFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(6);
+    }//GEN-LAST:event_tTmpFocusGained
+
+    private void tOriginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tOriginFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(8);
+    }//GEN-LAST:event_tOriginFocusGained
+
+    private void tDestinyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tDestinyFocusGained
+        // TODO add your handling code here:
+        this.seleccionarTexto(9);
+    }//GEN-LAST:event_tDestinyFocusGained
     
+    public void seleccionarTexto(int n){
+        switch (n) {
+            case 0:
+                this.tCc.selectAll();
+                this.tCc.getSelectedText();
+                break;
+            case 1:
+                this.tName.selectAll();
+                this.tName.getSelectedText();
+                break;
+            case 2:
+                this.tLastName.selectAll();
+                this.tLastName.getSelectedText();
+                break;
+            case 3:
+                this.tPhone.selectAll();
+                this.tPhone.getSelectedText();
+                break;
+            case 4:
+                this.tEmail.selectAll();
+                this.tEmail.getSelectedText();
+                break;
+            case 5:
+                this.tAddres.selectAll();
+                this.tAddres.getSelectedText();
+                break;
+            case 6:
+                this.tTmp.selectAll();
+                this.tTmp.getSelectedText();
+                break;
+            case 7:
+                this.tSymptoms.selectAll();
+                this.tSymptoms.getSelectedText();
+                break;
+            case 8:
+                this.tOrigin.selectAll();
+                this.tOrigin.getSelectedText();
+                break;
+            case 9:
+                this.tDestiny.selectAll();
+                this.tDestiny.getSelectedText();
+                break;
+            case 10:
+                this.tObs.selectAll();
+                this.tObs.getSelectedText();
+                break;
+            default:
+                break;
+        }
+    }
+    public void asignarFoco(int n){
+       
+        switch (n) {
+            case 0:
+                this.tCc.grabFocus();
+                if(this.tCc.getText().trim().isEmpty())
+                    break;
+            case 1:
+               this.tName.grabFocus();
+               if(this.tName.getText().trim().isEmpty())
+                break;
+            case 2:
+                this.tLastName.grabFocus();
+                if(this.tLastName.getText().trim().isEmpty())
+                break;
+            case 3:
+                this.tPhone.grabFocus();
+                if(this.tPhone.getText().trim().isEmpty())
+                break;
+            case 4:
+                this.tEmail.grabFocus();
+                if(this.tEmail.getText().trim().isEmpty())
+                break;
+            case 5:
+                this.tAddres.grabFocus();
+                if(this.tAddres.getText().trim().isEmpty())
+                break;
+            case 6:
+                this.tTmp.grabFocus();
+                if(this.tTmp.getText().trim().isEmpty())
+                break;
+            case 7:
+                this.tSymptoms.grabFocus();
+                if(this.tSymptoms.getText().trim().isEmpty())
+                break;
+            case 8:
+                this.tOrigin.grabFocus();
+                if(this.tOrigin.getText().trim().isEmpty())
+                break;
+            case 9:
+                this.tDestiny.grabFocus();
+                if(this.tDestiny.getText().trim().isEmpty())
+                break;
+            case 10:
+                this.tObs.grabFocus();
+                if(this.tObs.getText().trim().isEmpty())
+                break;
+            case 11:
+                this.bSave.grabFocus();
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void buscar(){
+        String cc = this.tCc.getText();
+        this.limpiar();
+        this.tCc.setText(cc);
+        this.findPerson();
+    }
     public void findPerson(){
         
         String cc = this.tCc.getText();
@@ -576,11 +853,10 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
                 this.tEmail.setText(this.gp.getEmail());
             if(this.gp.getAdress()!=null)
                 this.tAddres.setText(this.gp.getAdress().toUpperCase());
-            this.tTmp.grabFocus();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.toString(), "ERROR", JOptionPane.CANCEL_OPTION);
         }catch(NoResultException ex){
-            this.tName.grabFocus();
             this.existe=false;
         }
     }
@@ -604,7 +880,11 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
             String obs=this.tObs.getText();
             String origin=this.tOrigin.getText();
             String symptoms=this.tSymptoms.getText();
-            double tmp= Double.parseDouble(this.tTmp.getText().replace(',', '.'));
+            double tmp;
+            if(this.tTmp.getText().trim().isEmpty())
+                tmp=0;
+            else
+                tmp= Double.parseDouble(this.tTmp.getText().replace(',', '.'));
             Date date= Calendar.getInstance().getTime();
             Date time = Calendar.getInstance().getTime();
             GRegister gr;
@@ -670,6 +950,7 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
         this.tDestiny.setText(null);
         this.tObs.setText(null);
         this.gp=null;
+        this.busqueda=null;
         this.tAlerta.setBackground(Color.WHITE);
         this.tCc.grabFocus();
     }
@@ -683,6 +964,7 @@ public class IFRegistro extends javax.swing.JInternalFrame implements Runnable {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
