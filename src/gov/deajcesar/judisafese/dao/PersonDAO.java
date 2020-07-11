@@ -8,11 +8,13 @@ package gov.deajcesar.judisafese.dao;
 import gov.deajcesar.judisafese.entity.Person;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 /**
@@ -72,12 +74,9 @@ public class PersonDAO implements IDaoPerson {
     public Person findByCC(String cc) throws SQLException, NoResultException{
         EntityManager em = ConectionDB.cnx();
         
-        StringBuilder jpql=new StringBuilder();
-        jpql.append("Select p from Person as p where p.cc='");
-        jpql.append(cc);
-        jpql.append("'");
-        TypedQuery<Person> query = em.createQuery(jpql.toString(), Person.class);
-        Person result = query.getSingleResult();
+        String q = "Select P from Person as P where P.cc=:cc";
+        TypedQuery<Person> query = em.createQuery(q, Person.class);
+        Person result = query.setParameter("cc", cc).getSingleResult();
         em.close(); 
         return result;
     }
@@ -115,4 +114,5 @@ public class PersonDAO implements IDaoPerson {
         };
     }
     
+
 }

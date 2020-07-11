@@ -56,7 +56,6 @@ public class JFPrincipal extends javax.swing.JFrame {
         bIngreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gov/deajcesar/judisafese/resources/USUARIO_1.png"))); // NOI18N
         bIngreso.setText("Registrar Ingreso");
         bIngreso.setIconTextGap(20);
-        bIngreso.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/gov/deajcesar/judisafese/resources/save_78348.png"))); // NOI18N
         bIngreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bIngresoActionPerformed(evt);
@@ -145,6 +144,7 @@ public class JFPrincipal extends javax.swing.JFrame {
 
     private void bInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInformeActionPerformed
         // TODO add your handling code here:
+        this.verInternalFrameReporteCC();
         
     }//GEN-LAST:event_bInformeActionPerformed
 
@@ -194,6 +194,23 @@ public class JFPrincipal extends javax.swing.JFrame {
         nif.setSize(this.jDesktopPane1.getSize());
         this.jDesktopPane1.add(nif);
         nif.show();
+    }
+    
+    public void verInternalFrameReporte(){
+        this.jDesktopPane1.removeAll();
+        IFReporte rif = new IFReporte();
+        rif.setSize(this.jDesktopPane1.getSize());
+        rif.setContenedor(this);
+        this.jDesktopPane1.add(rif);
+        rif.show();
+    }
+    public void verInternalFrameReporteCC(){
+        this.jDesktopPane1.removeAll();
+        IFReporteCC rif = new IFReporteCC();
+        rif.setSize(this.jDesktopPane1.getSize());
+        rif.setContenedor(this);
+        this.jDesktopPane1.add(rif);
+        rif.show();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

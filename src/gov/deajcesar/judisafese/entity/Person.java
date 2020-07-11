@@ -113,4 +113,10 @@ public class Person implements Serializable {
     public void addRegister(Register r){
         this.registers.add(r);
     }
+
+    public List<Register> getRegisters() {
+        return registers;
+    }
+    
+    
 }

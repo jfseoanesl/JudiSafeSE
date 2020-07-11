@@ -7,6 +7,8 @@ package gov.deajcesar.judisafese.logic;
 
 import gov.deajcesar.judisafese.entity.Person;
 import gov.deajcesar.judisafese.entity.Register;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -100,6 +102,15 @@ public class GPerson {
             throw new NullPointerException("Se debe registrar el (los) Apellido(s) del visitante");
         }
         return true;
+    }
+    
+    public List<GRegister> getRegisters(){
+        List<GRegister> lr = new ArrayList();
+        for(Register r : this.person.getRegisters()){
+            GRegister gr = new GRegister(r);
+            lr.add(gr);
+        }
+        return lr;
     }
     
     

@@ -15,7 +15,7 @@ import javax.persistence.Persistence;
  */
 public class ConectionDB {
     private static  EntityManagerFactory emf = Persistence.createEntityManagerFactory(
-          "objectdb:$objectdb/db/Judis.odb");;
+          "objectdb:$objectdb/db/JudisafeSEDB.odb");;
     
     public static EntityManager cnx(){
         EntityManager em = emf.createEntityManager();

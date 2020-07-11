@@ -110,9 +110,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar Ingreso"/>
             <Property name="iconTextGap" type="int" value="20"/>
-            <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/gov/deajcesar/judisafese/resources/save_78348.png"/>
-            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bIngresoActionPerformed"/>

@@ -8,9 +8,13 @@ package gov.deajcesar.judisafese.logic;
 import gov.deajcesar.judisafese.dao.IDaoPerson;
 import gov.deajcesar.judisafese.dao.PersonDAO;
 import gov.deajcesar.judisafese.entity.Person;
+import gov.deajcesar.judisafese.entity.Register;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -59,4 +63,28 @@ public class GListPerson {
         this.dp.update(gp.getPerson());
     }
     
+    public GPerson getReportPersonRegister(Date i, Date f, String cc) throws SQLException, NoResultException{
+        if(i==null){
+            throw new NullPointerException("Se requiere la fecha inicial");
+        }
+        else if(f==null){
+            throw new NullPointerException("Se requiere la fecha final");
+        }
+        else if(cc.trim().isEmpty()){
+            throw new NullPointerException("Se requiere el No de CC");
+        }
+        else{
+            Person person = this.dp.findByCC(cc);
+            List<Register> ingresos = person.getRegisters();
+            Iterator<Register> it = person.getRegisters().iterator();
+            while(it.hasNext()){
+                Register r = it.next();
+                if((r.getDate().compareTo(i)<0) || r.getDate().compareTo(f)>0 ){
+                    it.remove();
+                }
+            }
+            GPerson p = new GPerson(person);
+            return p;
+        }    
+    }
 }

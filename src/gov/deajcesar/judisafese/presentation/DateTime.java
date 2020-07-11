@@ -7,6 +7,7 @@ package gov.deajcesar.judisafese.presentation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -19,5 +20,15 @@ public class DateTime {
         date= Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd - MMMMM - yyyy  hh:mm:ss");
         return sdf.format(date.getTime());
+    }
+    
+    public static String getDate(Date d){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
+        return sdf.format(d);
+    }
+    
+    public static String getTime(Date d){
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        return sdf.format(d);
     }
 }

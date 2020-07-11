@@ -10,6 +10,7 @@ import gov.deajcesar.judisafese.dao.RegisterDAO;
 import gov.deajcesar.judisafese.entity.Register;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,4 +36,26 @@ public class GListRegister {
         return GList;
     }
     
+    public List<GRegister> getAllRegister() throws SQLException{
+        return this.getResultQueryRegisters("Select r from Register as r");
+    }
+    
+    public List<GRegister> getReportDayTmp(Date i, Date f, double tmp) throws SQLException{
+        List<Register> list;
+        if(i==null){
+            throw new NullPointerException("Se requiere la fecha inicial");
+        }
+        else if(f==null){
+            throw new NullPointerException("Se requiere la fecha final");
+        }
+        else{
+                list = this.dr.queryReportDayTmp(i, f, tmp);
+                List<GRegister> GList = new ArrayList();
+                for(Register r : list){
+                    GList.add(new GRegister(r));
+                }
+                return GList;
+        }
+        
+    }
 }
