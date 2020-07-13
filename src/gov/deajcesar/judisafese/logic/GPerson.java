@@ -7,7 +7,10 @@ package gov.deajcesar.judisafese.logic;
 
 import gov.deajcesar.judisafese.entity.Person;
 import gov.deajcesar.judisafese.entity.Register;
+import gov.deajcesar.judisafese.presentation.DateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,8 +20,8 @@ import java.util.List;
 public class GPerson {
     private Person person;
 
-    public GPerson(String cc, String name, String lastName, String phone, String email, String addres) {
-        this.person = new Person(cc, name, lastName, phone, email, addres);
+    public GPerson(String cc, String name, String lastName, String phone, String email, String addres, Date birthDay) {
+        this.person = new Person(cc, name, lastName, phone, email, addres, birthDay);
     }
 
     public GPerson(Person person) {
@@ -82,7 +85,14 @@ public class GPerson {
     public String getAdress() {
         return this.person.getAdress();
     }
+    
+    public Date getBirthDay() {
+        return this.person.getBirthDay();
+    }
 
+    public void setBirthDay(Date birthDay) {
+        this.person.setBirthDay(birthDay);
+    }
     public void setAdress(String adress) {
         this.person.setAdress(adress);
     }
@@ -101,6 +111,13 @@ public class GPerson {
         else if(this.person.getLastName().isEmpty()){
             throw new NullPointerException("Se debe registrar el (los) Apellido(s) del visitante");
         }
+        else if(this.person.getBirthDay().toString().isEmpty()){
+            throw new NullPointerException("Se debe registrar la fecha de nacimiento del visitante");
+        }
+        else if(DateTime.getEdad(this.person.getBirthDay())<18){
+            throw new NullPointerException("La fecha de nacimiento no es valida, la edad debe ser superior a 18 años ");
+        }
+        
         return true;
     }
     
@@ -111,6 +128,16 @@ public class GPerson {
             lr.add(gr);
         }
         return lr;
+    }
+    
+    public boolean verificarReingreso(){
+        
+        for(Register gr: this.person.getRegisters()){
+            if(DateTime.isHoy(gr.getDate())){
+                return true;
+            }
+        }
+        return false;
     }
     
     

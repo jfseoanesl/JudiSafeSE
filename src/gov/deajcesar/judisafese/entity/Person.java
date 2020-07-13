@@ -7,6 +7,7 @@ package gov.deajcesar.judisafese.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -33,24 +36,34 @@ public class Person implements Serializable {
     private String adress;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="person", fetch = FetchType.EAGER)//
     private List<Register> registers=new ArrayList<>();
-
+    @Temporal(TemporalType.DATE)
+    private Date birthDay;
    
     public Person() {
         //this.registers = new ArrayList();
     }
 
-    public Person(String cc, String name, String lastName, String phone, String email, String adress) {
+    public Person(String cc, String name, String lastName, String phone, String email, String adress, Date birthDay) {
         this.cc = cc;
         this.name = name;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this.adress = adress;
+        this.birthDay=birthDay;
         //this.registers = new ArrayList();
     }
 
     public int getId() {
         return id;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 
     public void setId(int id) {
@@ -107,7 +120,7 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "id=" + id + ", cc=" + cc + ", name=" + name + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email + ", adress=" + adress + ", registers=" + registers + '}';
+        return "Person{" + "id=" + id + ", cc=" + cc + ", name=" + name + ", lastName=" + lastName + ", birthDay="+birthDay+", phone=" + phone + ", email=" + email + ", adress=" + adress + ", registers=" + registers + '}';
     }
     
     public void addRegister(Register r){

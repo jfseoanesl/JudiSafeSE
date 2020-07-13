@@ -47,6 +47,7 @@ public class PersonDAO implements IDaoPerson {
         up.setPhone(p.getPhone());
         up.setEmail(p.getEmail());
         up.setAdress(p.getAdress());
+        up.setBirthDay(p.getBirthDay());
         em.getTransaction().commit();
         em.close();
         

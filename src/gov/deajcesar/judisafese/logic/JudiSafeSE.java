@@ -19,7 +19,8 @@ public class JudiSafeSE {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        //PersonDAO p = new PersonDAO();
+       // p.migrarEntity();
         try{
             
             JFrame.setDefaultLookAndFeelDecorated(true);
