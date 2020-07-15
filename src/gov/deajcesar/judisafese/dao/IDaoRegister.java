@@ -9,6 +9,7 @@ import gov.deajcesar.judisafese.entity.Register;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -17,5 +18,6 @@ import java.util.List;
 public interface IDaoRegister {
     public void insert(Register r) throws SQLException;
     public List<Register> query(String q) throws SQLException;
+    public void deleteAll();
     public List<Register> queryReportDayTmp(Date i, Date f, double tm) throws SQLException;
 }

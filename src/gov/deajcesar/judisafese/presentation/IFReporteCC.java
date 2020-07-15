@@ -356,11 +356,10 @@ public class IFReporteCC extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 47, Short.MAX_VALUE)
-                                .addComponent(lTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lTotal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(358, 358, 358)
+                                .addComponent(lValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(bExportar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,7 +374,8 @@ public class IFReporteCC extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tCc, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tCc, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 184, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -440,6 +440,7 @@ public class IFReporteCC extends javax.swing.JInternalFrame {
 
     private void fInicioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fInicioFocusGained
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_fInicioFocusGained
 
     private void fInicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fInicioFocusLost
@@ -453,6 +454,7 @@ public class IFReporteCC extends javax.swing.JInternalFrame {
 
     private void fFinFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fFinFocusGained
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_fFinFocusGained
 
     private void fFinFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fFinFocusLost

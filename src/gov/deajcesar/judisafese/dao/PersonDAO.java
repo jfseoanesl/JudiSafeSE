@@ -34,7 +34,13 @@ public class PersonDAO implements IDaoPerson {
 
     @Override
     public void deleteAll() {
-        
+       EntityManager em = ConectionDB.cnx();
+       em.getTransaction().begin(); 
+       String q = "delete from Person";
+       int deleteCount = em.createQuery(q).executeUpdate();
+       em.getTransaction().commit();
+       em.close(); 
+       
     }
 
     @Override

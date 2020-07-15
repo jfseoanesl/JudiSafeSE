@@ -55,6 +55,16 @@ public class RegisterDAO implements IDaoRegister {
         em.close();
         return results;
     }
+
+    @Override
+    public void deleteAll() {
+       EntityManager em = ConectionDB.cnx();
+       em.getTransaction().begin(); 
+       String q = "delete from Register";
+       int deleteCount = em.createQuery(q).executeUpdate();
+       em.getTransaction().commit();
+       em.close(); 
+    }
     
     
     

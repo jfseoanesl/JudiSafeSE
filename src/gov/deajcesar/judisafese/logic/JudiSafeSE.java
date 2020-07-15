@@ -3,6 +3,7 @@ package gov.deajcesar.judisafese.logic;
 
 import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
 import gov.deajcesar.judisafese.dao.PersonDAO;
+import gov.deajcesar.judisafese.dao.RegisterDAO;
 import gov.deajcesar.judisafese.presentation.JFPrincipal;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -19,8 +20,7 @@ public class JudiSafeSE {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        //PersonDAO p = new PersonDAO();
-       // p.migrarEntity();
+         
         try{
             
             JFrame.setDefaultLookAndFeelDecorated(true);
